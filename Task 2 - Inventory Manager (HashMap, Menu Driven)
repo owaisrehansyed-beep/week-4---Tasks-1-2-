@@ -1,0 +1,64 @@
+import java.util.HashMap;
+import java.util.Scanner;
+public class InventoryManager {
+static HashMap<String, Integer> inventory = new HashMap<String, Integer>();
+static void addStock(String product, int qty) {
+if (inventory.containsKey(product)) {
+inventory.put(product, inventory.get(product) + qty);
+} else {
+inventory.put(product, qty);
+}
+System.out.println("Stock added. " + product + " = " + inventory.get(product));
+}
+static void removeStock(String product, int qty) {
+if (!inventory.containsKey(product)) {
+System.out.println("Product not found"); return;
+}
+int current = inventory.get(product);
+if (qty > current) {
+System.out.println("Not enough stock");
+} else {
+inventory.put(product, current - qty);
+System.out.println("Stock removed. " + product + " = " + inventory.get(product));
+}
+}
+static void checkStock(String product) {
+if (inventory.containsKey(product)) {
+System.out.println(product + " = " + inventory.get(product));
+} else {
+System.out.println("Product not found");
+}
+}
+static void displayAll() {
+System.out.println("All Products:");
+for (String key : inventory.keySet()) {
+System.out.println(key + ": " + inventory.get(key));
+}
+}
+public static void main(String[] args) {
+inventory.put("Apples", 50);
+inventory.put("Bananas", 30);
+inventory.put("Oranges", 40);
+Scanner sc = new Scanner(System.in);
+int choice = 0;
+while (choice != 5) {
+System.out.println("1.Add 2.Remove 3.Check 4.Display 5.Exit");
+System.out.print("Enter choice: ");
+choice = sc.nextInt();
+if (choice == 1) {
+System.out.print("Product: "); String name = sc.next();
+System.out.print("Qty: "); int q = sc.nextInt();
+addStock(name, q);
+} else if (choice == 2) {
+System.out.print("Product: "); String name = sc.next();
+System.out.print("Qty: "); int q = sc.nextInt();
+removeStock(name, q);
+} else if (choice == 3) {
+System.out.print("Product: "); String name = sc.next();
+checkStock(name);
+} else if (choice == 4) {
+displayAll();
+}
+}
+}
+}
